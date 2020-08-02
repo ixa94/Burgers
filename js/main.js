@@ -84,7 +84,18 @@ $(document).ready(() => {
     $('#reviews').slick({
         infinite: true,
         slidesToShow: 2,
-        slidesToScroll: 2
+        slidesToScroll: 2,
+        responsive: [
+            {
+                breakpoint: 579,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: false
+                }
+            },
+        ]
     });
 
     $('.open-modal').click(() => {
@@ -102,24 +113,31 @@ $(document).ready(() => {
         let phone = $('#phone');
         let time = $('#time');
 
-        if (name.val() && count.val() && time.val() && time.val()){
+        if (name.val() && count.val() && time.val() && time.val()) {
 
             $.ajax({
-               type:'post',
-               url:'mail.php',
-               data:'name=' + name.val() + '&count=' + count.val() + '&phone=' + phone.val() + '&time' + time.val(),
-               success: () =>{
-                   $('#reservation-sent').show();
-                   $('#reservation-content').hide();
-               },
+                type: 'post',
+                url: 'mail.php',
+                data: 'name=' + name.val() + '&count=' + count.val() + '&phone=' + phone.val() + '&time' + time.val(),
+                success: () => {
+                    $('#reservation-sent').show();
+                    $('#reservation-content').hide();
+                },
                 error: () => {
                     $('#reservation-container').hide();
                     alert('Ошибка бронирования.Свяжитесь пожалуйста,по номеру телефона.')
                 }
             });
-        }else{
+        } else {
             $('#reserve-error').show();
         }
+    });
+
+    $('#burger').click(() => {
+        $('#header').toggleClass('menu-open');
+    });
+    $('#header #menu ul li').click(() => {
+        $('#header').removeClass('menu-open');
     });
 
 });
